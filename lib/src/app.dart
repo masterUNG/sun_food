@@ -3,6 +3,7 @@ import 'package:http/http.dart' show get;
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import './models/json_model.dart';
+import './widgets/image_list.dart';
 
 class App extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int idInt = 0;
+  List<JsonModel> jsonModel = [];
 
   myClickFloating() async {
     print('You Click Floating');
@@ -21,6 +23,19 @@ class _AppState extends State<App> {
         'https://www.androidthai.in.th/sun/getFoodWhereIdMaster.php?isAdd=true&id=$idInt');
     var converted =json.decode(response.body);
     print('converted ==> $converted');
+
+    for (var data in converted) {
+
+      print('data ==> $data');
+      var objJsonModel =JsonModel.fromJson(data);
+      print('$objJsonModel');
+
+      setState(() {
+        jsonModel.add(objJsonModel);
+      });
+      
+    }
+
   }
 
   @override
@@ -38,7 +53,7 @@ class _AppState extends State<App> {
             myClickFloating();
           },
         ),
-        body: Text('idInt = $idInt'),
+        body: ImageList(jsonModel),
       ),
     );
   }
