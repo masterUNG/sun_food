@@ -21,21 +21,18 @@ class _AppState extends State<App> {
 
     var response = await get(
         'https://www.androidthai.in.th/sun/getFoodWhereIdMaster.php?isAdd=true&id=$idInt');
-    var converted =json.decode(response.body);
+    var converted = json.decode(response.body);
     print('converted ==> $converted');
 
     for (var data in converted) {
-
       print('data ==> $data');
-      var objJsonModel =JsonModel.fromJson(data);
+      var objJsonModel = JsonModel.fromJson(data);
       print('$objJsonModel');
 
       setState(() {
         jsonModel.add(objJsonModel);
       });
-      
     }
-
   }
 
   @override
